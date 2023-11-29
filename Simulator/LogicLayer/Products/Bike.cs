@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace LogicLayer.Products
 {
     public class Bike : Product
-    {
+    { 
         public override int MaterialsNeeded => 2;
         
         public override int EmployeesNeeded => 1;

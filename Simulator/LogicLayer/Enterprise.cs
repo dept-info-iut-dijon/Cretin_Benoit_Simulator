@@ -1,4 +1,6 @@
-﻿namespace LogicLayer
+﻿using LogicLayer.Products;
+
+namespace LogicLayer
 {
     /// <summary>
     /// Enterprise simulation
@@ -48,6 +50,8 @@
         /// </summary>
         public int TotalStock { get => stock.TotalStock; }
 
+        private ProductFactory productFactory;
+
 
         #endregion
 
@@ -64,6 +68,7 @@
             workshop = new Workshop();
             stock = new Stock();
             clients = new ClientService();
+            this.productFactory = new ProductFactory();
         }
         #endregion
 
@@ -120,13 +125,13 @@
             switch(type)
             {
                 case "bike":
-                    p = new Products.Bike();
+                    p = productFactory.Create("Bike");
                     break;
                 case "scooter":
-                    p = new Products.Scooter();
+                    p = productFactory.Create("Scooter");
                     break;
                 case "car":
-                    p = new Products.Car();
+                    p = productFactory.Create("Car");
                     break;
                 default:
                     throw new ProductUnknown();

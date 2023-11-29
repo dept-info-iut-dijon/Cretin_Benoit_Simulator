@@ -39,4 +39,9 @@ namespace LogicLayer
         /// </summary>
         public abstract int Price { get; }
     }
+
+    public interface IMakeProduct
+    {
+        Product CreateProduct();
+    }
 }

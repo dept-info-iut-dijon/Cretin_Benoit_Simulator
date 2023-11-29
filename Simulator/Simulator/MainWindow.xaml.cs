@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LogicLayer;
+using LogicLayer.Products;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,6 +38,11 @@ namespace Simulator
             timerMonth.Change(0, LogicLayer.Constants.MONTH_TIME);
             timerWeek = new Timer(TimerWeekTick);
             timerWeek.Change(0, LogicLayer.Constants.WEEK_TIME);
+
+            ProductFactory factory = new ProductFactory();
+            factory.Register("bike", new MakeBike());
+            factory.Register("scooter", new MakeScooter());
+            factory.Register("car", new MakeCar());
         }
 
         private void TimerSecondTick(object? data)

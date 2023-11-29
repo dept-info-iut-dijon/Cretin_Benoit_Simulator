@@ -20,4 +20,12 @@ namespace LogicLayer.Products
 
         public override int Price => 3000;
     }
+
+    public class MakeScooter : IMakeProduct
+    {
+        public Product CreateProduct()
+        {
+            return new Scooter();
+        }
+    }
 }

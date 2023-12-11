@@ -69,9 +69,7 @@ namespace LogicLayer
             stock = new Stock();
             clients = new ClientService();
             this.productFactory = new ProductFactory();
-            productFactory.Register("bike", new MakeBike());
-            productFactory.Register("scooter", new MakeScooter());
-            productFactory.Register("car", new MakeCar());
+            Initializer.InitFactory(this.productFactory);
         }
         #endregion
 

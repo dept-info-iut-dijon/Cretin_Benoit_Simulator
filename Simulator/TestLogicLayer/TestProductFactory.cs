@@ -17,5 +17,13 @@ namespace TestLogicLayer
             pf.Register("bike", bike);
             Assert.Equal("bike", pf.ProdcutNames[0]);
         }
+
+        [Fact]
+        public void testInitFactory()
+        {
+            ProductFactory pf = new ProductFactory();
+            Initializer.InitFactory(pf);
+            Assert.Equal("bike", pf.ProdcutNames[0]);
+        }
     }
 }

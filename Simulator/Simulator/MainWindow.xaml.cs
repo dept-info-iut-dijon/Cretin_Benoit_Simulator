@@ -30,6 +30,8 @@ namespace Simulator
         public MainWindow()
         {
             InitializeComponent();
+
+
             enterprise = new LogicLayer.Enterprise();
             DataContext = enterprise;
             timerSecond = new Timer(TimerSecondTick);
@@ -39,10 +41,6 @@ namespace Simulator
             timerWeek = new Timer(TimerWeekTick);
             timerWeek.Change(0, LogicLayer.Constants.WEEK_TIME);
 
-            ProductFactory factory = new ProductFactory();
-            factory.Register("bike", new MakeBike());
-            factory.Register("scooter", new MakeScooter());
-            factory.Register("car", new MakeCar());
         }
 
         private void TimerSecondTick(object? data)

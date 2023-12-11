@@ -69,6 +69,9 @@ namespace LogicLayer
             stock = new Stock();
             clients = new ClientService();
             this.productFactory = new ProductFactory();
+            productFactory.Register("bike", new MakeBike());
+            productFactory.Register("scooter", new MakeScooter());
+            productFactory.Register("car", new MakeCar());
         }
         #endregion
 
@@ -125,13 +128,13 @@ namespace LogicLayer
             switch(type)
             {
                 case "bike":
-                    p = productFactory.Create("Bike");
+                    p = productFactory.Create("bike");
                     break;
                 case "scooter":
-                    p = productFactory.Create("Scooter");
+                    p = productFactory.Create("scooter");
                     break;
                 case "car":
-                    p = productFactory.Create("Car");
+                    p = productFactory.Create("car");
                     break;
                 default:
                     throw new ProductUnknown();

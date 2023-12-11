@@ -68,6 +68,7 @@ namespace LogicLayer
             workshop = new Workshop();
             stock = new Stock();
             clients = new ClientService();
+            Initializer.InitClients(clients);
             this.productFactory = new ProductFactory();
             Initializer.InitFactory(this.productFactory);
         }

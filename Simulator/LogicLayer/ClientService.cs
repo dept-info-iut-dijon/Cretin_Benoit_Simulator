@@ -9,18 +9,17 @@ namespace LogicLayer
     /// <summary>
     /// Part of company, who deal with clients needs
     /// </summary>
-    internal class ClientService
+    public class ClientService
     {
         private Random r;
         private Dictionary<string, int> needs;
+        private Dictionary<string, int> probs;
 
         public ClientService()
         {
             needs = new Dictionary<string, int>();
+            probs = new Dictionary<string, int>();
             r = new Random();
-            needs["bike"] = 0;
-            needs["car"] = 0;
-            needs["scooter"] = 0;
         }
         private int ProbaToClients(int proba)
         {
@@ -29,9 +28,9 @@ namespace LogicLayer
         public void UpdateClients()
         {
             // the values are the probability new clients want a type...
-            needs["bike"] += ProbaToClients(20);
-            needs["scooter"] += ProbaToClients(14);
-            needs["car"] += ProbaToClients(10);
+            needs["bike"] += ProbaToClients(probs["bike"]);
+            needs["scooter"] += ProbaToClients(probs["scooter"]);
+            needs["car"] += ProbaToClients(probs["car"]);
         }
         /// <summary>
         /// Get clients needs
@@ -68,6 +67,21 @@ namespace LogicLayer
         {
             needs[type] -= 10;
             if (needs[type] < 0) needs[type] = 0;
+        }
+
+        /// <summary>
+        /// Initialise le dictionnaire de besoins
+        /// </summary>
+        /// <param name="type">type de product</param>
+        /// <param name="need">nombre de products voulus</param>
+        public void InitNeeds(string type, int need)
+        {
+            needs[type] = need;
+        }
+
+        public void InitProbs(string type, int prob)
+        {
+            probs[type] = prob;
         }
     }
 }

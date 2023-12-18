@@ -9,7 +9,7 @@ namespace LogicLayer
     /// <summary>
     /// Part of company, who deal with clients needs
     /// </summary>
-    public class ClientService
+    public class ClientService : Subject
     {
         private Random r;
         private Dictionary<string, int> needs;
@@ -29,8 +29,11 @@ namespace LogicLayer
         {
             // the values are the probability new clients want a type...
             needs["bike"] += ProbaToClients(probs["bike"]);
+            NotifyClienNeedsChange("bike", needs["bike"]);
             needs["scooter"] += ProbaToClients(probs["scooter"]);
+            NotifyClienNeedsChange("scooter", needs["scooter"]);
             needs["car"] += ProbaToClients(probs["car"]);
+            NotifyClienNeedsChange("car", needs["car"]);
         }
         /// <summary>
         /// Get clients needs

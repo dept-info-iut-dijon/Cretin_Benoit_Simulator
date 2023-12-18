@@ -5,7 +5,7 @@ namespace LogicLayer
     /// <summary>
     /// Enterprise simulation
     /// </summary>
-    public class Enterprise : Subject
+    public class Enterprise : Subject,IObserver
     {
         #region associations
         private Workshop workshop;
@@ -89,6 +89,7 @@ namespace LogicLayer
             workshop = new Workshop();
             stock = new Stock();
             clients = new ClientService();
+            clients.Register(this);
             Initializer.InitClients(clients);
             this.productFactory = new ProductFactory();
             Initializer.InitFactory(this.productFactory);
@@ -291,6 +292,31 @@ namespace LogicLayer
         {
             PayEmployees();
             UpdateClients();
+        }
+
+        public void MoneyChange(int money)
+        {
+            NotifyMoneyChange(money);
+        }
+
+        public void StockChange(int stock)
+        {
+            NotifyStockChange(stock);
+        }
+
+        public void MaterialChange(int materials)
+        {
+            NotifyMaterialChange(materials);
+        }
+
+        public void EmployeesChange(int free, int total)
+        {
+            NotifyEmployeesChange(free, total);
+        }
+
+        public void ClientNeedsChange(string type, int need)
+        {
+            NotifyClienNeedsChange(type, need);
         }
 
         #endregion

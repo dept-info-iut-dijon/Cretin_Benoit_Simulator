@@ -29,5 +29,10 @@ namespace LogicLayer
         {
             
         }
+
+        public void ClientNeedsChange(string type, int need)
+        {
+            
+        }
     }
 }

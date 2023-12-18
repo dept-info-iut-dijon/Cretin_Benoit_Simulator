@@ -21,11 +21,10 @@ namespace Simulator
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window,IObserver
+    public partial class MainWindow : Window, IObserver
     {
         private LogicLayer.Enterprise enterprise;
         private Timer timerSecond;
-        private Timer timerMonth;
         private Timer timerWeek;
         public MainWindow()
         {
@@ -36,8 +35,6 @@ namespace Simulator
             DataContext = enterprise;
             timerSecond = new Timer(TimerSecondTick);
             timerSecond.Change(0, LogicLayer.Constants.TIME_SLICE); 
-            timerMonth = new Timer(TimerMonthTick);
-            timerMonth.Change(0, LogicLayer.Constants.MONTH_TIME);
             timerWeek = new Timer(TimerWeekTick);
             timerWeek.Change(0, LogicLayer.Constants.WEEK_TIME);
             enterprise.Register(this);
@@ -66,26 +63,6 @@ namespace Simulator
             });
         }
 
-        private void TimerMonthTick(object? data)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                try
-                {
-                    
-                }
-                catch (LogicLayer.NotEnoughMoney)
-                {
-                    timerSecond.Dispose();
-                    timerMonth.Dispose();
-
-                    MessageBox.Show("Not enough money to pay employees !");
-                    EndOfSimulation();
-                }
-            });
-            
-            
-        }
 
         private void EndOfSimulation()
         {
@@ -107,9 +84,6 @@ namespace Simulator
             scootStock.Content = enterprise.GetStock("scooter").ToString();
             carStock.Content = enterprise.GetStock("car").ToString();
 
-            bikeAsk.Content = enterprise.GetAskClients("bike").ToString();
-            scootAsk.Content = enterprise.GetAskClients("scooter").ToString();
-            carAsk.Content = enterprise.GetAskClients("car").ToString();
         }
 
         private void BuyMaterials(object sender, RoutedEventArgs e)
@@ -228,6 +202,19 @@ namespace Simulator
         public void EmployeesChange(int free, int total)
         {
             this.employees.Content = free.ToString() + "/" + total.ToString();
+        }
+
+        public void ClientNeedsChange(string type, int need)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                switch (type)
+                {
+                    case "bike": bikeAsk.Content = need.ToString(); break;
+                    case "scooter": scootAsk.Content = need.ToString(); break;
+                    case "car": carAsk.Content = need.ToString(); break;
+                }
+            });
         }
     }
 }

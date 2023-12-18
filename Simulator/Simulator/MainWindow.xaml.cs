@@ -21,7 +21,7 @@ namespace Simulator
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window,IObserver
     {
         private LogicLayer.Enterprise enterprise;
         private Timer timerSecond;
@@ -40,6 +40,7 @@ namespace Simulator
             timerMonth.Change(0, LogicLayer.Constants.MONTH_TIME);
             timerWeek = new Timer(TimerWeekTick);
             timerWeek.Change(0, LogicLayer.Constants.WEEK_TIME);
+            enterprise.Register(this);
 
         }
 
@@ -96,7 +97,6 @@ namespace Simulator
             totalStock.Content = enterprise.TotalStock.ToString()+" %";
             materials.Content = enterprise.Materials.ToString();
             employees.Content = enterprise.FreeEmployees.ToString()+"/"+enterprise.Employees.ToString();
-            money.Content = enterprise.Money.ToString("C");
 
             bikesProd.Content = enterprise.GetProduction("bike").ToString();
             scootsProd.Content = enterprise.GetProduction("scooter").ToString();
@@ -203,6 +203,15 @@ namespace Simulator
         private void BuildCar(object sender, RoutedEventArgs e)
         {
             BuildProduct("car");
+        }
+
+        public void MoneyChange(int money)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                this.money.Content = money.ToString("C");
+            });
+            
         }
     }
 }

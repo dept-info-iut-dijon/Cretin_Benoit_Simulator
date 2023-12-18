@@ -35,7 +35,7 @@ namespace Simulator
             enterprise = new LogicLayer.Enterprise();
             DataContext = enterprise;
             timerSecond = new Timer(TimerSecondTick);
-            timerSecond.Change(0, LogicLayer.Constants.TIME_SLICE); 
+            timerSecond.Change(0, LogicLayer.Constants.TIME_SLICE);
             timerWeek = new Timer(TimerWeekTick);
             timerWeek.Change(0, LogicLayer.Constants.WEEK_TIME);
             enterprise.Register(this);
@@ -46,6 +46,7 @@ namespace Simulator
             InitPanelBuild();
             InitPanelProd();
             InitPanelStock();
+            InitPanelClientNeeds();
 
         }
 
@@ -56,7 +57,7 @@ namespace Simulator
                 // every second, to update screen
                 UpdateScreen();
             });
-            
+
         }
 
         private void TimerWeekTick(object? data)
@@ -102,11 +103,11 @@ namespace Simulator
                 enterprise.BuyMaterials();
                 UpdateScreen();
             }
-            catch(LogicLayer.NotEnoughMoney)
+            catch (LogicLayer.NotEnoughMoney)
             {
                 MessageBox.Show("Not enough money to buy materials !");
             }
-            catch(Exception x)
+            catch (Exception x)
             {
                 MessageBox.Show(x.Message);
             }
@@ -132,19 +133,19 @@ namespace Simulator
                 enterprise.Dismiss();
                 UpdateScreen();
             }
-            catch(LogicLayer.NoEmployee)
+            catch (LogicLayer.NoEmployee)
             {
                 MessageBox.Show("There is no employee to dismiss");
             }
-            catch(LogicLayer.NotEnoughMoney)
+            catch (LogicLayer.NotEnoughMoney)
             {
                 MessageBox.Show("There is not enough money to puy dismiss bonus");
             }
-            catch(LogicLayer.EmployeeWorking)
+            catch (LogicLayer.EmployeeWorking)
             {
                 MessageBox.Show("You can't dismiss no : employees working");
             }
-            catch(Exception x)
+            catch (Exception x)
             {
                 MessageBox.Show(x.Message);
             }
@@ -163,11 +164,11 @@ namespace Simulator
             }
             catch (LogicLayer.NotEnoughMaterials)
             {
-                MessageBox.Show("You do not have suffisent materials to build a "+s);
+                MessageBox.Show("You do not have suffisent materials to build a " + s);
             }
             catch (LogicLayer.NoEmployee)
             {
-                MessageBox.Show("You do not have enough employees to build a "+s);
+                MessageBox.Show("You do not have enough employees to build a " + s);
             }
             catch (Exception x)
             {
@@ -181,7 +182,7 @@ namespace Simulator
             {
                 this.money.Content = money.ToString("C");
             });
-            
+
         }
 
         public void StockChange(int stock)
@@ -203,18 +204,13 @@ namespace Simulator
         {
             Dispatcher.Invoke(() =>
             {
-                switch (type)
-                {
-                    case "bike": bikeAsk.Content = need.ToString(); break;
-                    case "scooter": scootAsk.Content = need.ToString(); break;
-                    case "car": carAsk.Content = need.ToString(); break;
-                }
+
             });
         }
 
         private void InitPanelBuild()
         {
-            foreach(string type in enterprise.NamesOfProducts)
+            foreach (string type in enterprise.NamesOfProducts)
             {
                 // create a button, with a static style
                 Button button = new Button();
@@ -303,6 +299,36 @@ namespace Simulator
             }
         }
 
+        private void InitPanelClientNeeds()
+        {
+            foreach (string type in enterprise.NamesOfProducts)
+            {
+                Border border = new Border();
+                border.Style = System.Windows.Application.Current.TryFindResource("border") as Style;
 
+                StackPanel stackPanel = new StackPanel();
+                border.Child = stackPanel;
+
+                // create an image with resources, and file with same name than product, and add to the panel
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                string path = string.Format("pack://application:,,,/Simulator;component/Images/{0}.png", type);
+                BitmapImage bmp = new BitmapImage(new Uri(path));
+                image.Source = bmp;
+                image.Width = 40;
+                stackPanel.Children.Add(image);
+
+                // create a label, with the good style and add to the panel
+                Label label = new Label();
+                label.Content = "0";
+                label.Name = type + "sClientNeeds";
+                label.Style = System.Windows.Application.Current.TryFindResource("legend") as Style;
+                stackPanel.Children.Add(label);
+
+                // add the button to the parent panel
+                panelClientNeeds.Children.Add(border);
+            }
+
+
+        }
     }
 }

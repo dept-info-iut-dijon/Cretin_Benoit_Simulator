@@ -65,7 +65,7 @@ namespace LogicLayer
         /// <param name="type"></param>
         public void Buy(string type)
         {
-            needs[type] -= 10;
+            needs[type] -= 1;
             if (needs[type] < 0) needs[type] = 0;
         }
 

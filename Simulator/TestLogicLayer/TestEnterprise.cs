@@ -70,5 +70,20 @@ namespace TestLogicLayer
                 while (true) e.PayEmployees();
             });
         }
+
+        [Fact]
+        public void TestEndOfMonth()
+        {
+            Enterprise e = new Enterprise();
+            int money = e.Money;
+
+            e.Hire();
+            e.Hire();
+
+            Thread.Sleep(LogicLayer.Constants.MONTH_TIME);
+            Thread.Sleep(LogicLayer.Constants.MONTH_TIME);
+
+            Assert.True(e.Money < money);
+        }
     }
 }

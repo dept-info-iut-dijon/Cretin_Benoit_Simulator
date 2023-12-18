@@ -53,6 +53,9 @@ namespace LogicLayer
         private ProductFactory productFactory;
 
 
+        private System.Threading.Timer timer;
+
+
         #endregion
 
         #region Constructors
@@ -71,7 +74,20 @@ namespace LogicLayer
             Initializer.InitClients(clients);
             this.productFactory = new ProductFactory();
             Initializer.InitFactory(this.productFactory);
+            this.timer = new Timer(EndOfMonth);
+            timer.Change(0, LogicLayer.Constants.MONTH_TIME);
         }
+
+
+        #endregion
+
+        #region destructor
+
+        ~Enterprise()
+        {
+            timer.Dispose();
+        }
+
         #endregion
 
         #region methods
@@ -207,11 +223,11 @@ namespace LogicLayer
             {
                 TrySell("bike");
             }
-            else if(clients.WantToBuy("scooter"))
+            if(clients.WantToBuy("scooter"))
             {
                 TrySell("scooter");
             }
-            else if(clients.WantToBuy("car"))
+            if(clients.WantToBuy("car"))
             {
                 TrySell("car");
             }
@@ -246,6 +262,12 @@ namespace LogicLayer
         {
             return clients.GetAskFor(type);
         }
+
+        private void EndOfMonth(object? state)
+        {
+            PayEmployees();
+        }
+
         #endregion
 
 

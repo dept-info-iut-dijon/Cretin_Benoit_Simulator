@@ -183,6 +183,7 @@ namespace LogicLayer
             Materials -= p.MaterialsNeeded; // consume materials
             // start the building...
             workshop.StartProduction(p);
+            NotifyEmployeesChange(FreeEmployees, Employees);
         }
 
         /// <summary>
@@ -199,6 +200,7 @@ namespace LogicLayer
                 stock.Add(product);
                 base.NotifyStockChange(stock.TotalStock);
                 workshop.Remove(product);
+                NotifyEmployeesChange(FreeEmployees, Employees);
             }
 
         }

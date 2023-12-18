@@ -41,6 +41,10 @@ namespace Simulator
             timerWeek = new Timer(TimerWeekTick);
             timerWeek.Change(0, LogicLayer.Constants.WEEK_TIME);
             enterprise.Register(this);
+            MoneyChange(enterprise.Money);
+            MaterialChange(enterprise.Materials);
+            StockChange(enterprise.TotalStock);
+            EmployeesChange(enterprise.FreeEmployees, enterprise.Employees);
 
         }
 
@@ -94,9 +98,6 @@ namespace Simulator
             enterprise.UpdateProductions();
             enterprise.UpdateBuying();
             
-            totalStock.Content = enterprise.TotalStock.ToString()+" %";
-            materials.Content = enterprise.Materials.ToString();
-            employees.Content = enterprise.FreeEmployees.ToString()+"/"+enterprise.Employees.ToString();
 
             bikesProd.Content = enterprise.GetProduction("bike").ToString();
             scootsProd.Content = enterprise.GetProduction("scooter").ToString();
@@ -212,6 +213,21 @@ namespace Simulator
                 this.money.Content = money.ToString("C");
             });
             
+        }
+
+        public void StockChange(int stock)
+        {
+            totalStock.Content = stock.ToString() + " %";
+        }
+
+        public void MaterialChange(int materials)
+        {
+            this.materials.Content = materials.ToString();
+        }
+
+        public void EmployeesChange(int free, int total)
+        {
+            this.employees.Content = free.ToString() + "/" + total.ToString();
         }
     }
 }

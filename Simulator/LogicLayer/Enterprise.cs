@@ -319,6 +319,11 @@ namespace LogicLayer
             NotifyClienNeedsChange(type, need);
         }
 
+        public string[] NamesOfProducts
+        {
+            get => productFactory.ProdcutNames;
+        }
+
         #endregion
 
 

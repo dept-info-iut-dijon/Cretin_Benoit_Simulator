@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Simulator
 {
@@ -42,6 +43,7 @@ namespace Simulator
             MaterialChange(enterprise.Materials);
             StockChange(enterprise.TotalStock);
             EmployeesChange(enterprise.FreeEmployees, enterprise.Employees);
+            InitPanelBuild();
 
         }
 
@@ -165,20 +167,6 @@ namespace Simulator
                 MessageBox.Show(x.Message);
             }
         }
-        private void BuildBike(object sender, RoutedEventArgs e)
-        {
-            BuildProduct("bike");
-        }
-
-        private void BuildScooter(object sender, RoutedEventArgs e)
-        {
-            BuildProduct("scooter");
-        }
-
-        private void BuildCar(object sender, RoutedEventArgs e)
-        {
-            BuildProduct("car");
-        }
 
         public void MoneyChange(int money)
         {
@@ -216,5 +204,37 @@ namespace Simulator
                 }
             });
         }
+
+        private void InitPanelBuild()
+        {
+            foreach(string type in enterprise.NamesOfProducts)
+            {
+                // create a button, with a static style
+                Button button = new Button();
+                button.Style = System.Windows.Application.Current.TryFindResource("resBtn") as Style;
+                // when the button is clicked, we call BuildProduct with the good type
+                button.Click += (sender, args) => { BuildProduct(type); };
+                // create the stack panel inside the button
+                var panel = new StackPanel();
+                button.Content = panel;
+                // create an image with resources, and file with same name than product, and add to the panel
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                string path =
+                string.Format("pack://application:,,,/Simulator;component/Images/{0}.png", type);
+                BitmapImage bmp = new BitmapImage(new Uri(path));
+                image.Source = bmp;
+                panel.Children.Add(image);
+                // create a label, with the good style and add to the panel
+                Label label = new Label();
+                label.Content = "Build a " + type;
+                label.Style = System.Windows.Application.Current.TryFindResource("legend") as Style;
+                panel.Children.Add(label);
+                // add the button to the parent panel
+                panelBuild.Children.Add(button);
+
+            }
+        }
+
+
     }
 }

@@ -66,25 +66,8 @@
                     <Grid Grid.Row="1" Margin="4" MinHeight="60" >
                         <StackPanel>
                             <Label HorizontalAlignment="Center" Content="Stock" />
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Border BorderBrush="Black" BorderThickness="1" Margin="2" >
-                                    <StackPanel>
-                                        <Image Source="Images/bike.png" Width="40" />
-                                        <Label x:Name="bikeStock" Content="0" Style="{StaticResource legend}" />
-                                    </StackPanel>
-                                </Border>
-                                <Border BorderBrush="Black" BorderThickness="1" Margin="2" >
-                                    <StackPanel >
-                                        <Image Source="Images/scooter.png" Width="40" />
-                                        <Label x:Name="scootStock" Content="0" Style="{StaticResource legend}" />
-                                    </StackPanel>
-                                </Border>
-                                <Border BorderBrush="Black" BorderThickness="1" Margin="2" >
-                                    <StackPanel>
-                                        <Image Source="Images/car.png" Width="40" />
-                                        <Label x:Name="carStock" Content="0" Style="{StaticResource legend}" />
-                                    </StackPanel>
-                                </Border>
+                            <StackPanel x:Name="panelStock" Orientation="Horizontal" HorizontalAlignment="Center">
+                               
                             </StackPanel>
                         </StackPanel>
                         

@@ -45,6 +45,7 @@ namespace Simulator
             EmployeesChange(enterprise.FreeEmployees, enterprise.Employees);
             InitPanelBuild();
             InitPanelProd();
+            InitPanelStock();
 
         }
 
@@ -77,12 +78,6 @@ namespace Simulator
         {
             enterprise.UpdateProductions();
             enterprise.UpdateBuying();
-
-
-            bikeStock.Content = enterprise.GetStock("bike").ToString();
-            scootStock.Content = enterprise.GetStock("scooter").ToString();
-            carStock.Content = enterprise.GetStock("car").ToString();
-
         }
 
         private void UpdateProd(Product p)
@@ -275,6 +270,36 @@ namespace Simulator
                 // add the button to the parent panel
                 panelProd.Children.Add(border);
 
+            }
+        }
+
+        private void InitPanelStock()
+        {
+            foreach (string type in enterprise.NamesOfProducts)
+            {
+                Border border = new Border();
+                border.Style = System.Windows.Application.Current.TryFindResource("border") as Style;
+
+                StackPanel stackPanel = new StackPanel();
+                border.Child = stackPanel;
+
+                // create an image with resources, and file with same name than product, and add to the panel
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                string path = string.Format("pack://application:,,,/Simulator;component/Images/{0}.png", type);
+                BitmapImage bmp = new BitmapImage(new Uri(path));
+                image.Source = bmp;
+                image.Width = 40;
+                stackPanel.Children.Add(image);
+
+                // create a label, with the good style and add to the panel
+                Label label = new Label();
+                label.Content = "0";
+                label.Name = type + "sStock";
+                label.Style = System.Windows.Application.Current.TryFindResource("legend") as Style;
+                stackPanel.Children.Add(label);
+
+                // add the button to the parent panel
+                panelStock.Children.Add(border);
             }
         }
 

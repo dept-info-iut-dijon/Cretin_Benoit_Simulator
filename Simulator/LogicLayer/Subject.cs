@@ -51,5 +51,13 @@ namespace LogicLayer
                 obs.EmployeesChange(free, total);
             }
         }
+
+        protected void NotifyClienNeedsChange(string type, int need)
+        {
+            foreach (var obs in observers)
+            {
+                obs.ClientNeedsChange(type, need);
+            }
+        }
     }
 }

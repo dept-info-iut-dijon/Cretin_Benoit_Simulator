@@ -290,6 +290,7 @@ namespace LogicLayer
         private void EndOfMonth(object? state)
         {
             PayEmployees();
+            UpdateClients();
         }
 
         #endregion

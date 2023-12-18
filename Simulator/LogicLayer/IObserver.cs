@@ -15,6 +15,8 @@ namespace LogicLayer
         public void MaterialChange(int materials);
 
         public void EmployeesChange(int free, int total);
+
+        public void ClientNeedsChange(string type, int need);
     }
 
 

@@ -72,7 +72,7 @@ namespace Simulator
             {
                 try
                 {
-                    enterprise.UpdateClients();
+                    
                 }
                 catch (LogicLayer.NotEnoughMoney)
                 {

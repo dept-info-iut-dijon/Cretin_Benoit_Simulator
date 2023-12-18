@@ -31,7 +31,15 @@ namespace LogicLayer
         /// <summary>
         /// Gets the amount of materials that enterprise disposes
         /// </summary>
-        public int Materials { get => materials; }
+        public int Materials
+        {
+            get => materials;
+            set
+            {
+                this.materials = value;
+                base.NotifyMaterialChange(materials);
+            }
+        }
 
         private int employees;
         /// <summary>
@@ -55,7 +63,10 @@ namespace LogicLayer
         /// <summary>
         /// Gets the total amount of stock
         /// </summary>
-        public int TotalStock { get => stock.TotalStock; }
+        public int TotalStock 
+        { 
+            get => stock.TotalStock;         
+        }
 
         private ProductFactory productFactory;
 
@@ -108,7 +119,7 @@ namespace LogicLayer
             if (money < cost)
                 throw new NotEnoughMoney();
             Money -= cost;
-            materials += Constants.MATERIALS;
+            Materials += Constants.MATERIALS;
         }
 
         /// <summary>
@@ -117,6 +128,7 @@ namespace LogicLayer
         public void Hire()
         {
             ++employees;
+            base.NotifyEmployeesChange(FreeEmployees, employees);
         }
 
         /// <summary>
@@ -135,6 +147,7 @@ namespace LogicLayer
                 throw new EmployeeWorking();
             Money -= cost;
             employees--;
+            base.NotifyEmployeesChange(FreeEmployees, employees);
         }
 
         /// <summary>
@@ -167,7 +180,7 @@ namespace LogicLayer
             if (employees - EmployeesWorkshop < p.EmployeesNeeded)
                 throw new NoEmployee();
 
-            materials -= p.MaterialsNeeded; // consume materials
+            Materials -= p.MaterialsNeeded; // consume materials
             // start the building...
             workshop.StartProduction(p);
         }
@@ -184,6 +197,7 @@ namespace LogicLayer
             foreach(var product in list)
             {
                 stock.Add(product);
+                base.NotifyStockChange(stock.TotalStock);
                 workshop.Remove(product);
             }
 
@@ -246,6 +260,7 @@ namespace LogicLayer
             if(p!=null)
             {
                 stock.Remove(p);
+                base.NotifyStockChange(stock.TotalStock);
                 Money += p.Price;
                 clients.Buy(type);
             }

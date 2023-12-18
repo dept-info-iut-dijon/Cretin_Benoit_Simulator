@@ -85,5 +85,18 @@ namespace TestLogicLayer
 
             Assert.True(e.Money < money);
         }
+
+        [Fact]
+        public void TestMaterialChange()
+        {
+            Enterprise e = new Enterprise();
+            FakeObserver obs = new FakeObserver();
+            e.Register(obs);
+            int matos = e.Materials;
+            e.BuyMaterials();
+            Assert.True(obs.Materials > matos);
+            Assert.Equal(obs.Materials, e.Materials);
+
+        }
     }
 }

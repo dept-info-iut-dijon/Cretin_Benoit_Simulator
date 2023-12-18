@@ -27,5 +27,29 @@ namespace LogicLayer
                 obs.MoneyChange(money);
             }
         }
+
+        protected void NotifyStockChange(int stock)
+        {
+            foreach(var obs in observers)
+            {
+                obs.StockChange(stock);
+            }
+        }
+
+        protected void NotifyMaterialChange(int materials)
+        {
+            foreach (var obs in observers)
+            {
+                obs.MaterialChange(materials);
+            }
+        }
+
+        protected void NotifyEmployeesChange(int free, int total)
+        {
+            foreach (var obs in observers)
+            {
+                obs.EmployeesChange(free, total);
+            }
+        }
     }
 }

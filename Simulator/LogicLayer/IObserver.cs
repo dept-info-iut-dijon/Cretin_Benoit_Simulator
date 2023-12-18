@@ -10,5 +10,12 @@ namespace LogicLayer
     {
         public void MoneyChange(int money);
 
+        public void StockChange(int stock);
+
+        public void MaterialChange(int materials);
+
+        public void EmployeesChange(int free, int total);
     }
+
+
 }
